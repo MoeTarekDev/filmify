@@ -31,16 +31,19 @@ let featuresReducer = createSlice({
     increasePage: (state) => {
       state.page = state.page + 1;
       localStorage.setItem("page", JSON.stringify(state.page));
+      scrollUp();
     },
     decreasePage: (state) => {
       if (state.page > 1) {
         state.page = state.page - 1;
         localStorage.setItem("page", JSON.stringify(state.page));
+        scrollUp();
       }
     },
     firstPage: (state) => {
       state.page = 1;
       localStorage.setItem("page", JSON.stringify(1));
+      scrollUp();
     },
     setScrollPosition: (state) => {
       const x = window.scrollY;

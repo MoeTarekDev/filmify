@@ -167,7 +167,7 @@ export default function Header() {
               <div
                 className={` absolute ${
                   isPending === true ? "block z-[5000]" : "hidden"
-                } right-[10px] mt-1`}
+                } md:right-[10px] sm:right-[15%] right-[20%] mt-1`}
               >
                 <span className="spinner"></span>
               </div>
@@ -177,7 +177,7 @@ export default function Header() {
                   dispatch(setSearchValue(e.target.value));
                 }}
                 type="text"
-                className={`text-otherTextColor bg-inputBackground rounded-md outline-none  py-3  pe-2 ps-[32px] grow focus:ps-2 transition-all duration-300 focus:relative focus:z-50  focus:border-black dark:focus:border-white border-transparent  border-2 hover:border-gray-500 md:block ${
+                className={`text-otherTextColor bg-inputBackground rounded-md outline-none  py-3  pe-2 ps-[32px] grow focus:ps-2 transition-all duration-300 focus:relative focus:z-50  focus:border-gray-500 border-transparent  border-2 hover:border-gray-500 md:block ${
                   openSearch ? "flex" : "hidden"
                 }`}
                 placeholder="Search any movie..."
@@ -199,7 +199,7 @@ export default function Header() {
                 onClick={() => {
                   setAvatarMenu((prev) => !prev);
                 }}
-                className="flex text-sm w-full h-full bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 hover:ring-gray-300 hover:ring-4 dark:hover:ring-gray-600 dark:focus:ring-gray-600"
+                className="flex text-sm w-full h-full bg-gray-800 rounded-full md:me-0 focus:ring-2 focus:ring-gray-400 hover:ring-gray-400 hover:ring-2"
                 type="button"
               >
                 <img
@@ -212,18 +212,15 @@ export default function Header() {
               <div
                 className={`z-10 ${
                   avatarMenu ? "absolute" : "hidden"
-                } bg-inputBackground divide-y divide-gray-100 rounded-lg shadow w-40 top-[50px] right-0 translate-x-50  dark:divide-gray-600`}
+                } bg-inputBackground divide-y divide-gray-100 rounded-lg shadow w-40 top-[50px] right-0 translate-x-50  text-otherTextColor`}
               >
-                <div
-                  id="avatarName"
-                  className="px-4 py-3 text-sm text-gray-900 dark:text-white"
-                >
-                  <div className="font-medium truncate line-clamp-1">
+                <div id="avatarName" className="px-4 py-3 text-sm">
+                  <div className="font-medium truncate line-clamp-1 ">
                     Hello @{userName ? userName : ""}
                   </div>
                 </div>
                 <ul
-                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                  className="py-2 text-sm hover:bg-profileMenuColor"
                   aria-labelledby="dropdownUserAvatarButton"
                 >
                   <li>
@@ -231,7 +228,7 @@ export default function Header() {
                       onClick={() => {
                         handleAvatarMenu();
                       }}
-                      className="px-4 cursor-pointer py-2 flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="px-4 cursor-pointer py-2 flex items-center"
                     >
                       <span> Theme:</span>
                       <span className="flex items-center ms-1 gap-1">
@@ -249,11 +246,11 @@ export default function Header() {
                   onClick={() => {
                     dispatch(logOut());
                   }}
-                  className="py-2"
+                  className=""
                 >
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="block px-4 py-4 text-sm hover:bg-profileMenuColor rounded-b-lg"
                   >
                     Sign out
                   </a>

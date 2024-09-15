@@ -45,6 +45,7 @@ export default {
         ratingColor: "var(--rating-color)",
         loaderBg: "var(--loader-bg)",
         skeletonColor: "var(--skeletonColor)",
+        profileMenuColor: "var(--profileMenuColor)",
       },
     },
   },

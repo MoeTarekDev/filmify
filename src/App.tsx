@@ -1,19 +1,23 @@
+import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import "./App.css";
 import { myStore } from "./Store/Store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
-import Home from "./Pages/Home/Home";
-import MoviePage from "./Pages/MoviePage/MoviePage";
-import GenrePage from "./Pages/GenrePage/GenrePage";
+const Home = lazy(() => import("./Pages/Home/Home"));
+const MoviePage = lazy(() => import("./Pages/MoviePage/MoviePage"));
+const GenrePage = lazy(() => import("./Pages/GenrePage/GenrePage"));
+const LanguagePage = lazy(() => import("./Pages/LanguagePage/LanguagePage"));
+const PageNotFound = lazy(() => import("./Pages/PageNotFound/PageNotFound"));
+const FavoriteMovies = lazy(
+  () => import("./Pages/FavoriteMovies/FavoriteMovies")
+);
+const WishlistPage = lazy(() => import("./Pages/WishlistPage/WishlistPage"));
+const Auth = lazy(() => import("./Pages/Auth/Auth"));
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import LanguagePage from "./Pages/LanguagePage/LanguagePage";
-import PageNotFound from "./Pages/PageNotFound/PageNotFound";
-import FavoriteMovies from "./Pages/FavoriteMovies/FavoriteMovies";
-import WishlistPage from "./Pages/WishlistPage/WishlistPage";
-import Auth from "./Pages/Auth/Auth";
 import { Toaster } from "sonner";
 import ProtectedPage from "./Components/ProtectedPage/ProtectedPage";
+import Loading from "./Components/Loading/Loading";
 
 function App() {
   let routes = createBrowserRouter([
@@ -58,7 +62,9 @@ function App() {
     <>
       <QueryClientProvider client={myClient}>
         <Provider store={myStore}>
-          <RouterProvider router={routes}></RouterProvider>
+          <Suspense fallback={<Loading />}>
+            <RouterProvider router={routes}></RouterProvider>
+          </Suspense>
         </Provider>
         <Toaster richColors position="top-center" theme="light" />
       </QueryClientProvider>

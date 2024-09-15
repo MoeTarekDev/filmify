@@ -4,6 +4,7 @@ import Loading from "./../../Components/Loading/Loading";
 import { movieType } from "../../Types/Types";
 import { useEffect } from "react";
 import { featuresActions, scrollUp } from "../../Store/features.slice";
+import { ChevronUp } from "lucide-react";
 
 export default function SearchPage() {
   let { searchValue, searchResults, isPending } = useSelector(
@@ -53,9 +54,9 @@ export default function SearchPage() {
           </div>
           <button
             onClick={scrollUp}
-            className={`${showGoTop} flex fixed bottom-5 right-5 bg-otherPrimaryColor  items-center justify-center p-4 rounded-full z-[1000] transition-opacity duration-300`}
+            className={`${showGoTop} flex fixed bottom-5 right-5 bg-otherPrimaryColor  items-center justify-center p-3 rounded-full z-[1000] transition-opacity duration-300`}
           >
-            <i className="fa-solid fa-chevron-up"></i>
+            <ChevronUp className="text-white" />
           </button>
         </section>
       )}

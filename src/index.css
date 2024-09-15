@@ -27,8 +27,8 @@ body {
 }
 
 .light {
-  --headerAndNav: #f5f5f5; /* Header and navbar bg*/
-  --background: white; /* Sections  bg*/
+  --headerAndNav: #d4d4d8; /* Header and navbar bg*/
+  --background: #e4e4e7; /* Sections  bg*/
   --headings-color: #000000; /* Headings color*/
   --input-background: #e4e4e7; /* Input navbar bg*/
   --banner-text-color: #bbbbd5; /* baner gentre color*/
@@ -42,10 +42,11 @@ body {
   --primary: #ac1b1b;
   --primary-variant: #da3131;
   --skeletonColor: #e5e7eb;
+  --profileMenuColor: #b1b1b8;
 }
 .dark {
   --headerAndNav: #100f12;
-  --background: #100f12;
+  --background: #09090b;
   --headings-color: white;
   --text-color: #ffffff;
   --navbar-p-color: #c2c6c6; /* Navbar p color*/
@@ -60,6 +61,7 @@ body {
   --primary: #ac1b1b;
   --primary-variant: #da3131;
   --skeletonColor: #4b5563;
+  --profileMenuColor: #5d5d63;
 }
 
 main .banner ul li {

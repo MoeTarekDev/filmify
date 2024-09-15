@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Swiper from "swiper";
 import Film from "../../Components/Film/Film";
 import FilmBanner from "../../Components/FilmBanner/FilmBanner";
-import Loading from "../../Components/Loading/Loading";
 import {
   getMovieCredits,
   getMovieDetails,
@@ -15,7 +14,6 @@ import {
 import { apiToken, movieType, optionsType } from "../../Types/Types";
 // @ts-ignore
 import { Helmet } from "react-helmet";
-import FilmBannerSkeleton from "../../Components/FilmBannerSkeleton/FilmBannerSkeleton";
 import FilmsCarouselSkeleton from "../../Components/FilmsCarouselSkeleton/FilmsCarouselSkeleton";
 
 export default function MoviePage() {
@@ -37,7 +35,7 @@ export default function MoviePage() {
     let { data } = await axios.request(options);
     setMovieRecommendations(data.results);
   }
-  let { movieDetails, isPending } = useSelector(function (store: {
+  let { movieDetails } = useSelector(function (store: {
     movieReducer: {
       movieDetails: {
         id: number;

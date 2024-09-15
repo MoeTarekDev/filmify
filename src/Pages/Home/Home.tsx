@@ -1,16 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Swiper from "swiper";
 import Banner from "../../Components/Banner/Banner";
-import { apiToken, movieType, optionsType } from "../../Types/Types";
+import { apiToken, optionsType } from "../../Types/Types";
 
 import { Mousewheel, Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 
-import Film from "../../Components/Film/Film";
 // @ts-ignore
 import { Helmet } from "react-helmet";
-import FilmsCarouselSkeleton from "../../Components/FilmsCarouselSkeleton/FilmsCarouselSkeleton";
+import TopRatedMovies from "../../Components/TopRatedMovies/TopRatedMovies";
+import TrendingMovies from "../../Components/TrendingMovies/TrendingMovies";
+import UpcomingMovies from "../../Components/UpcomingMovies/UpcomingMovies";
 export default function Home() {
   let [topRatedMovies, setTopRatedMovies] = useState<any>(null);
   let [trendingMovies, setTrendingMovies] = useState<any>(null);
@@ -77,7 +78,7 @@ export default function Home() {
     return axios.request(options);
   }
 
-  async function getAllData() {
+  const getAllData = useCallback(async () => {
     const [x, y, topRated, trendingMovies, upcomingMovies] = await Promise.all([
       getBanner(),
       getGenres(),
@@ -90,8 +91,7 @@ export default function Home() {
     setTopRatedMovies(topRated.data.results);
     setUpcomingMovies(upcomingMovies.data.results);
     setTrendingMovies(trendingMovies.data.results);
-  }
-
+  }, []);
   useEffect(() => {
     getAllData();
   }, []);
@@ -135,55 +135,9 @@ export default function Home() {
       <main className="pt-[100px] bg-myBackground">
         <div className="container px-5 py-5">
           <Banner bannerData={bannerData} genres={genres} />
-          {topRatedMovies ? (
-            <div className="mt-[50px]">
-              <h2 className="text-headingsColor text-2xl font-bold">
-                Top Rated Movies
-              </h2>
-              <div className="mt-5 flex gap-3 swiper-container-two overflow-x-hidden mb-10 ">
-                <div className="swiper-wrapper">
-                  {topRatedMovies.map((movie: movieType) => (
-                    <Film key={movie.id} movie={movie} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <FilmsCarouselSkeleton />
-          )}
-          {trendingMovies ? (
-            <div className="mt-[50px]">
-              <h2 className="text-headingsColor text-2xl font-bold">
-                Trending Movies
-              </h2>
-              <div className="mt-5 flex gap-3 swiper-container-two overflow-x-hidden mb-10 ">
-                <div className="swiper-wrapper">
-                  {trendingMovies.map((movie: movieType) => (
-                    <Film key={movie.id} movie={movie} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <FilmsCarouselSkeleton />
-          )}
-
-          {upcomingMovies ? (
-            <div className="mt-[50px]">
-              <h2 className="text-headingsColor text-2xl font-bold">
-                Upcoming Movies
-              </h2>
-              <div className="mt-5 flex gap-3 swiper-container-two overflow-x-hidden mb-10 ">
-                <div className="swiper-wrapper">
-                  {upcomingMovies.map((movie: movieType) => (
-                    <Film key={movie.id} movie={movie} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <FilmsCarouselSkeleton />
-          )}
+          <TopRatedMovies topRatedMovies={topRatedMovies} />
+          <TrendingMovies trendingMovies={trendingMovies} />
+          <UpcomingMovies upcomingMovies={upcomingMovies} />
         </div>
       </main>
     </>

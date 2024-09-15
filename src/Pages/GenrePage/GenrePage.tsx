@@ -1,15 +1,15 @@
-import axios from "axios";
-import Film from "../../Components/Film/Film";
-import { apiToken, optionsType } from "../../Types/Types";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../../Components/Loading/Loading";
-import { useParams } from "react-router-dom";
-import { featuresActions, scrollUp } from "../../Store/features.slice";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Navigator from "../../Components/Navigator/Navigator";
+import { featuresActions, scrollUp } from "../../Store/features.slice";
+import { apiToken, optionsType } from "../../Types/Types";
 // @ts-ignore
 import { Helmet } from "react-helmet";
+import MoviesList from "../../Components/MoviesList/MoviesList";
+import { ChevronUp } from "lucide-react";
 
 export default function GenrePage() {
   let { id } = useParams();
@@ -31,6 +31,7 @@ export default function GenrePage() {
       dispatch(setScrollPosition());
       dispatch(setShowGoTop());
     });
+    console.log("TEST");
   }, []);
   async function getSelectedGenre() {
     let options: optionsType = {
@@ -52,11 +53,11 @@ export default function GenrePage() {
     return await axios.request(options);
   }
 
-  let { data, isFetching } = useQuery({
+  let { data } = useQuery({
     queryKey: ["Genre", id, page],
     queryFn: getSelectedGenre,
   });
-  if (isFetching) return <Loading />;
+  // if (isFetching) return <Loading />;
 
   return (
     <>
@@ -73,22 +74,18 @@ export default function GenrePage() {
           <h5 className="text-headingsColor text-3xl font-bold mt-3 self-start">
             {`All ${genreName} Movies`}
           </h5>
-          <div className="grid-class gap-5 mt-5">
-            {data?.data?.results.map((movie: { id: number }) => (
-              <div key={movie.id}>
-                <Film movie={movie} />
-              </div>
-            ))}
-          </div>
+
+          <MoviesList data={data} />
           <Navigator />
         </div>
         <button
           onClick={scrollUp}
-          className={`${showGoTop} flex fixed bottom-5 right-5 bg-otherPrimaryColor  items-center justify-center p-4 rounded-full z-[1000] transition-opacity duration-300`}
+          className={`${showGoTop} flex fixed bottom-5 right-5 bg-otherPrimaryColor  items-center justify-center p-3 rounded-full z-[1000] transition-opacity duration-300`}
         >
-          <i className="fa-solid fa-chevron-up"></i>
+          <ChevronUp className="text-white" />
         </button>
       </section>
     </>
   );
 }
+//

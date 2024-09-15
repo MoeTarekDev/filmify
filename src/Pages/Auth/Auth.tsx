@@ -1,24 +1,28 @@
+import { useFormik } from "formik";
 import { useEffect } from "react";
-import Swiper from "swiper/bundle";
+import { useDispatch, useSelector } from "react-redux";
+import Swiper from "swiper";
+import { Mousewheel, Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import * as Yup from "yup";
 import imageOne from "../../assets/auth1.webp";
 import imageTwo from "../../assets/auth2.webp";
 import imageThree from "../../assets/auth3.webp";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { featuresActions } from "../../Store/features.slice";
-import { useDispatch, useSelector } from "react-redux";
+
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
-import { setDoc, getDoc, doc } from "firebase/firestore";
-import { userActions } from "../../Store/user.slice";
-import { toast } from "sonner";
+
+import { doc, getDoc, setDoc } from "firebase/firestore";
+
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { userActions } from "../../Store/user.slice";
 export default function Auth() {
   let navigate = useNavigate();
   const { authPage, isDark } = useSelector(function (store: {
@@ -183,6 +187,8 @@ export default function Auth() {
   }, [isDark]);
   useEffect(() => {
     const swiper = new Swiper(".swiper-container-four", {
+      modules: [Navigation, Pagination, Mousewheel],
+
       slidesPerView: 1,
 
       autoplay: {
