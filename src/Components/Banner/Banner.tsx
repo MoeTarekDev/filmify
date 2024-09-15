@@ -1,61 +1,18 @@
-import axios from "axios";
-import { optionsType, apiToken } from "../../Types/Types";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Swiper from "swiper";
 
-import { Navigation, Pagination, Mousewheel } from "swiper/modules";
-import "swiper/swiper-bundle.css";
-import { Link } from "react-router-dom";
-import moviePlaceHolder from "../../assets/placeholder.webp";
 import { CirclePlay } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Mousewheel, Navigation, Pagination } from "swiper/modules";
+import "swiper/swiper-bundle.css";
+import BannerSkeleton from "../BannerSkeleton/BannerSkeleton";
 
-export default function Banner() {
-  let [bannerData, setBannerData] = useState<any>(null);
-  let [genres, setGenres] = useState<[{ name: string; id: number }] | null>(
-    null
-  );
+export default function Banner({ bannerData, genres }: any) {
   let [runningNowFilm, setRunningNowFilm] = useState<any>(null);
   let [imageActive, setImageActive] = useState<number>(0);
   let [test, setTest] = useState<any>(0);
 
   const swiperRef = useRef<Swiper | null>(null);
-
-  async function getBanner() {
-    let options: optionsType = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/movie/now_playing",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${apiToken}`,
-      },
-    };
-
-    let data: { data: { results: [] } } = await axios.request(options);
-    setBannerData(data.data.results);
-  }
-
-  async function getGenres(): Promise<void> {
-    try {
-      let options: optionsType = {
-        url: "https://api.themoviedb.org/3/genre/movie/list",
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${apiToken} `,
-        },
-      };
-
-      let { data } = await axios.request(options);
-      setGenres(data.genres);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getGenres();
-    getBanner();
-  }, []);
 
   useEffect(() => {
     if (bannerData && bannerData.length > 0) {
@@ -123,15 +80,11 @@ export default function Banner() {
 
   return (
     <>
-      {bannerData ? (
-        <div className="banner relative rounded-2xl before:absolute before:inset-0 before:bg-gradient-to-r from-stone-900 before:z-10 before:w-full before:h-full flex flex-col p-7  before:rounded-2xl overflow-hidden">
+      {bannerData && genres ? (
+        <div className="banner min-w-[300px] max-w-[1610px] h-[615px] relative rounded-2xl before:absolute before:inset-0 before:bg-gradient-to-r from-stone-900 before:z-10 before:w-full before:h-full flex flex-col p-7  before:rounded-2xl overflow-hidden">
           <img
             className="w-full h-full rounded-2xl absolute z-0 inset-0 object-cover"
-            src={
-              runningNowFilm?.backdrop_path
-                ? `https://image.tmdb.org/t/p/w1280/${runningNowFilm?.backdrop_path}`
-                : moviePlaceHolder
-            }
+            src={`https://image.tmdb.org/t/p/w1280/${runningNowFilm?.backdrop_path}`}
             alt={`${runningNowFilm?.original_title}` + ` image`}
           />
           <div className="relative z-20 lg:ps-[100px] sm:ps-[40px]  pt-[100px] pb-[50px] lg:w-1/2 w-full sm:w-[80%] flex flex-col gap-3 rounded-2xl">
@@ -140,14 +93,10 @@ export default function Banner() {
             </h4>
             <div className="flex items-center gap-2 w-fit text-bannerTextColor ">
               <span>
-                {runningNowFilm?.release_date
-                  ? runningNowFilm.release_date.split("").splice(0, 4)
-                  : ""}
+                {runningNowFilm?.release_date?.split("").splice(0, 4)}
               </span>
               <span className="my-badge">
-                {runningNowFilm?.vote_average
-                  ? runningNowFilm.vote_average.toFixed(1)
-                  : ""}
+                {runningNowFilm?.vote_average?.toFixed(1)}
               </span>
             </div>
             <ul className="flex items-center gap-2">
@@ -197,7 +146,7 @@ export default function Banner() {
           </div>
         </div>
       ) : (
-        ""
+        <BannerSkeleton />
       )}
     </>
   );

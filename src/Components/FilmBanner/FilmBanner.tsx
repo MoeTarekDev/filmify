@@ -1,9 +1,12 @@
+import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import placeHolder from "../../assets/placeholder.webp";
-import FilmTopPart from "../FilmTopPart/FilmTopPart";
-import { useState } from "react";
-import moviePlaceHolder from "../../assets/movie-placeholder.webp";
 import "../../scrollbar.css";
+import FilmTopPart from "../FilmTopPart/FilmTopPart";
+import Video from "../Video/Video";
+import VideosSkeleton from "../VideosSkeleton/VideosSkeleton";
+import FilmBannerSkeleton from "../FilmBannerSkeleton/FilmBannerSkeleton";
+
 export default function FilmBanner() {
   let { movieDetails, movieCredits, movieVideos, movieRelease } = useSelector(
     function (store: {
@@ -37,43 +40,61 @@ export default function FilmBanner() {
       return store.movieReducer;
     }
   );
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    // Check if movieVideos are available, and set loading accordingly
+    if (movieVideos && movieVideos.length > 0) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [movieVideos]);
 
   return (
     <>
-      {movieDetails && movieCredits && movieVideos && movieRelease ? (
-        <div className="rounded-2xl  flex md:flex-row flex-col gap-10 relative py-10 px-5  before:rounded-2xl before:absolute before:inset-0 before:bg-black/90 before:z-10 before:w-full before:h-full ">
+      {movieDetails && movieCredits && movieRelease ? (
+        <div className="rounded-2xl min-w-[300px] max-w-[1610px] h-[1423px] sm:h-[1323px] md:h-[785px] flex md:flex-row flex-col gap-10 relative py-10 px-5 before:rounded-2xl before:absolute before:inset-0 before:bg-black/90 before:z-10 before:w-full before:h-full ">
           <img
-            className="w-full absolute z-0 inset-0 h-full rounded-2xl  object-cover "
+            className="w-full absolute z-0 inset-0 h-full rounded-2xl object-cover"
             src={`https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`}
             alt={`${movieDetails.title}` + ` back drop image`}
+            width={1280}
+            height={720}
           />
-          <div
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="group rounded-2xl md:sticky relative top-0 max-w-[300px] w-full h-full  max-h-[450px] z-10"
-          >
-            <img
-              className="rounded-2xl w-full h-full"
-              src={
-                movieDetails.poster_path
-                  ? `https://image.tmdb.org/t/p/w342/${movieDetails.poster_path}`
-                  : moviePlaceHolder
-              }
-              alt={`${movieDetails.title}` + ` poster`}
-            />
-
-            <FilmTopPart movieId={movieDetails.id} isHovered={isHovered} />
+          <div className="md:h-[705px] h-[450px] relative w-[300px] flex-shrink-0">
+            <div
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              className="group rounded-2xl md:sticky relative top-0 w-[290px] md:w-[300px]  max-h-[450px] z-10 "
+            >
+              <img
+                className="rounded-2xl w-full h-full object-cover"
+                src={
+                  movieDetails.poster_path &&
+                  `https://image.tmdb.org/t/p/w342/${movieDetails.poster_path}`
+                }
+                alt={`${movieDetails.title}` + ` poster`}
+                width={342}
+                height={513}
+              />
+              <FilmTopPart movieId={movieDetails.id} isHovered={isHovered} />
+            </div>
           </div>
-          <div className="relative z-10 flex flex-col w-full overflow-x-hidden">
+          <div className="relative z-10 flex flex-col w-full overflow-hidden">
             <div className="mt-4">
               <h4 className="lg:text-6xl md:text-5xl sm:text-3xl text-2xl text-white line-clamp-1">
                 {movieDetails.title}
               </h4>
               <div className="flex items-center gap-3 mt-3 text-bannerTextColor">
-                <div className="flex items-center gap-2 ">
+                <div className="flex items-center gap-2">
                   <span>
-                    <i className="text-yellow-400 fa-solid fa-star"></i>
+                    <Star
+                      fill="rgb(250 204 21)"
+                      className="text-yellow-400 w-4"
+                    />
                   </span>
                   <span>{movieDetails.vote_average.toFixed(1)}</span>
                 </div>
@@ -84,12 +105,14 @@ export default function FilmBanner() {
                     movieRelease[0]?.release_dates[1]?.certification}
                 </span>
               </div>
-              <ul className="flex items-center genres-list gap-2 mt-2 text-bannerTextColor">
+              <ul className="flex flex-wrap items-center genres-list gap-2 mt-2 text-bannerTextColor">
                 {movieDetails.genres.map((genre: { name: string }, index) => (
                   <li key={index}>{genre.name}</li>
                 ))}
               </ul>
-              <p className="text-white py-2">{movieDetails.overview}</p>
+              <p className="text-white my-2 line-clamp-3">
+                {movieDetails.overview}
+              </p>
               <div className="flex gap-12 mt-3">
                 <span className="text-bannerTextColor">Starring</span>
                 <div className="text-white casting-list">
@@ -107,28 +130,22 @@ export default function FilmBanner() {
             </div>
             <div className="mt-7 flex flex-col gap-5 text-3xl">
               <h5 className="text-white">Trailers and Clips</h5>
-
-              <div className=" w-full overflow-x-auto custom-scrollbar film-trailers flex gap-6 pb-2">
-                {movieVideos
-                  .slice(0, 5)
-                  .map((video: { id: number; key: string }) => (
-                    <iframe
-                      key={video.id}
-                      allowFullScreen={false}
-                      className="min-w-[280px] md:min-w-[350px] sm:min-h-[200px] sm:min-w-[350px] lg:min-w-[500px] md:h-[220px] lg:h-[281px]  rounded-2xl "
-                      src={
-                        movieVideos
-                          ? `https://www.youtube.com/embed/${video.key}?&theme=dark&color=white&rel=0`
-                          : placeHolder
-                      }
-                    ></iframe>
-                  ))}
+              <div className="w-full h-[260px] lg:h-[250px] overflow-x-auto overflow-y-hidden custom-scrollbar film-trailers flex gap-6 pb-2">
+                {isLoading ? (
+                  <VideosSkeleton />
+                ) : (
+                  movieVideos
+                    .slice(0, 5)
+                    .map((video: { id: number; key: string }) => (
+                      <Video key={video.id} video={video} />
+                    ))
+                )}
               </div>
             </div>
           </div>
         </div>
       ) : (
-        ""
+        <FilmBannerSkeleton />
       )}
     </>
   );

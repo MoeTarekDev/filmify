@@ -41,6 +41,7 @@ body {
   --badge: #e4e4e7;
   --primary: #ac1b1b;
   --primary-variant: #da3131;
+  --skeletonColor: #e5e7eb;
 }
 .dark {
   --headerAndNav: #100f12;
@@ -58,6 +59,7 @@ body {
   --badge: #e4e4e7;
   --primary: #ac1b1b;
   --primary-variant: #da3131;
+  --skeletonColor: #4b5563;
 }
 
 main .banner ul li {

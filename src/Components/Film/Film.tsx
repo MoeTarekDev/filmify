@@ -14,7 +14,7 @@ export default function Film(props: any) {
 
   return (
     <>
-      <div className={`swiper-slide h-full flex flex-col justify-between `}>
+      <div className={`swiper-slide h-full flex flex-col justify-between`}>
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -39,7 +39,7 @@ export default function Film(props: any) {
           </Link>
         </div>
         <FilmTopPart movieId={movie.id} isHovered={isHovered} />
-        <div className="mt-2 ">
+        <div className="mt-2">
           <Link
             onClick={() => {
               dispatch(clearSearchValue());

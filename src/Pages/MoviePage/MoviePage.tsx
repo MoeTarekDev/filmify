@@ -1,20 +1,22 @@
-import FilmBanner from "../../Components/FilmBanner/FilmBanner";
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import Swiper from "swiper";
+import Film from "../../Components/Film/Film";
+import FilmBanner from "../../Components/FilmBanner/FilmBanner";
+import Loading from "../../Components/Loading/Loading";
 import {
   getMovieCredits,
   getMovieDetails,
   getMovieRelease,
   getMovieVideos,
 } from "../../Store/movie.slice";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { apiToken, movieType, optionsType } from "../../Types/Types";
-import axios from "axios";
-import Film from "../../Components/Film/Film";
-import Swiper from "swiper";
-import Loading from "../../Components/Loading/Loading";
 // @ts-ignore
 import { Helmet } from "react-helmet";
+import FilmBannerSkeleton from "../../Components/FilmBannerSkeleton/FilmBannerSkeleton";
+import FilmsCarouselSkeleton from "../../Components/FilmsCarouselSkeleton/FilmsCarouselSkeleton";
 
 export default function MoviePage() {
   let { id } = useParams();
@@ -123,28 +125,32 @@ export default function MoviePage() {
         />
         <link rel="canonical" href={window.location.href} />
       </Helmet>
-      {isPending ? (
-        <Loading />
-      ) : (
-        <section className="bg-myBackground pt-[120px] pb-[50px] min-h-screen ">
-          <div className="container px-5 ">
-            <FilmBanner />
 
-            <div className="mt-[50px]">
-              <h5 className="text-headingsColor text-2xl font-bold">
-                You May Also Like
-              </h5>
-              <div className="mt-5 flex gap-3 swiper-container-three overflow-x-hidden mb-10 ">
-                <div className="swiper-wrapper ">
-                  {movieRecommendations?.map((movie: movieType) => (
-                    <Film key={movie.id} movie={movie} />
-                  ))}
-                </div>
+      <section className="bg-myBackground pt-[120px] pb-[50px] min-h-screen ">
+        <div className="container px-5">
+          <FilmBanner />
+
+          <div className="mt-[50px]">
+            <h5 className="text-headingsColor text-2xl font-bold">
+              You May Also Like
+            </h5>
+
+            <div className="mt-5 flex gap-3 swiper-container-three overflow-x-hidden mb-10 min-h-[312px] max-h-[540px]">
+              <div className="swiper-wrapper ">
+                {movieRecommendations ? (
+                  <>
+                    {movieRecommendations?.map((movie: movieType) => (
+                      <Film key={movie.id} movie={movie} />
+                    ))}
+                  </>
+                ) : (
+                  <FilmsCarouselSkeleton />
+                )}
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </>
   );
 }

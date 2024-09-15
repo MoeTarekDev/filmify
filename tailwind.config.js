@@ -44,6 +44,7 @@ export default {
         myBackground: "var(--background)",
         ratingColor: "var(--rating-color)",
         loaderBg: "var(--loader-bg)",
+        skeletonColor: "var(--skeletonColor)",
       },
     },
   },
