@@ -474,7 +474,7 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swiper from "swiper";
-import { Mousewheel, Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Autoplay, Mousewheel, Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import * as Yup from "yup";
 import imageOne from "../../assets/auth1.webp";
@@ -490,7 +490,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -502,7 +502,7 @@ export default function Auth() {
   }) {
     return store.featuresReducer;
   });
-  const { setUserEmail, setUserName, setUserToken, setUserImage } = userActions;
+  const { setUserEmail, setUserName } = userActions;
   const { changeAuthPageToSignUp, changeAuthPageToSignIn } = featuresActions;
   let dispatch = useDispatch();
   const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;

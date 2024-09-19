@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { menuActions } from "../../Store/menu.slice";
 import { useDispatch, useSelector } from "react-redux";
+import { menuActions } from "../../Store/menu.slice";
 
-import { getSearchResults, headerActions } from "../../Store/header.slice";
+import { Menu, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { userActions } from "./../../Store/user.slice";
 import { featuresActions } from "../../Store/features.slice";
+import { getSearchResults, headerActions } from "../../Store/header.slice";
 import moon from "../../assets/moon.webp";
 import sun from "../../assets/sun.webp";
-import { Menu, Search, X } from "lucide-react";
 import { auth } from "../../firebase/firebase";
 export default function Header() {
   let [openSearch, setOpenSearch] = useState<Boolean | false>(false);

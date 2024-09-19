@@ -30,7 +30,6 @@ export default function ProtectedPage({ children }: any) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        console.log("User logged in:", currentUser);
         setUser(currentUser);
         dispatch(setUserEmail(currentUser.email));
         dispatch(setUserName(currentUser.displayName));
