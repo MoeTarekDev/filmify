@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
-@import "react-image-gallery/styles/css/image-gallery.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,7 +48,7 @@ body {
   --background: #09090b;
   --headings-color: white;
   --text-color: #ffffff;
-  --navbar-p-color: #c2c6c6; /* Navbar p color*/
+  --navbar-p-color: #9aa0a0; /* Navbar p color*/
   --navbar-p-color-hover: #ffffff; /* Navbar p hover color*/
   --input-background: #313036;
   --bars-lens: rgb(215, 205, 205);

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import Swiper from "swiper/bundle";
+import Swiper from "swiper";
+import { Mousewheel, Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import imageOne from "../../assets/auth1.webp";
 import imageTwo from "../../assets/auth2.webp";
@@ -9,6 +10,7 @@ import * as Yup from "yup";
 export default function SignUp() {
   const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
   const validationSchema = Yup.object({
     userName: Yup.string()
       .required("name is required")
@@ -47,30 +49,32 @@ export default function SignUp() {
   });
 
   useEffect(() => {
-    new Swiper(".swiper-container-four", {
-      slidesPerView: 1,
-
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: true,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      loop: true,
-    });
+    setTimeout(() => {
+      new Swiper(".swiper-container-four", {
+        modules: [Navigation, Pagination, Mousewheel, Autoplay], // Ensure Autoplay is added
+        slidesPerView: 1,
+        loop: true, // Keep loop enabled for continuous autoplay
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false, // Ensure autoplay doesn't stop on interaction
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    }, 100); // Add slight delay to ensure the DOM is fully loaded
   }, []);
   return (
     <>
       <section className="grid grid-cols-12 min-h-screen">
         <div className="swiper-container-four col-span-5 bg-primaryColor overflow-hidden py-10 hidden md:block">
           <div className="swiper-wrapper">
-            <div className="swiper-slide  cursor-grab">
+            <div className="swiper-slide cursor-grab">
               <img
                 className="w-full h-[400px] object-contain"
                 src={imageOne}
-                alt=""
+                alt="anime image"
               />
               <h2 className="text-white text-center text-lg font-bold px-5">
                 Lights, Camera, Login!
@@ -84,7 +88,7 @@ export default function SignUp() {
               <img
                 className="w-full h-[400px] object-contain"
                 src={imageThree}
-                alt=""
+                alt="anime image"
               />
               <h2 className="text-white text-center text-lg font-bold mt-2 px-5">
                 Your Ticket to Endless Entertainment
@@ -98,7 +102,7 @@ export default function SignUp() {
               <img
                 className="w-full h-[400px] object-contain"
                 src={imageTwo}
-                alt=""
+                alt="anime image"
               />
               <h2 className="text-white text-center text-lg font-bold mt-2 px-5">
                 Reel in the Magic
@@ -132,7 +136,7 @@ export default function SignUp() {
             >
               <li className="me-2" role="presentation">
                 <button
-                  className="inline-block  py-3 px-1  border-b-2 rounded-t-lg font-bold text-black"
+                  className="inline-block py-3 px-1  border-b-2 rounded-t-lg font-bold text-black"
                   id="signin-tab"
                   data-tabs-target="#signin"
                   type="button"
@@ -179,7 +183,7 @@ export default function SignUp() {
                     value={formikSignIn.values.email}
                     name="email"
                     type="email"
-                    className="bg-[#f7f6f8] rounded-lg border-none text-black font-light  py-3"
+                    className="bg-[#f7f6f8] rounded-lg border-none text-black font-light p-3"
                   />
                 </div>
                 <div className="flex flex-col gap-3">
@@ -192,7 +196,7 @@ export default function SignUp() {
                     value={formikSignIn.values.password}
                     name="password"
                     type="password"
-                    className="bg-[#f7f6f8] rounded-lg border-none text-black font-light  py-3"
+                    className="bg-[#f7f6f8] rounded-lg border-none text-black font-light px-3  py-3"
                   />
                 </div>
                 <button

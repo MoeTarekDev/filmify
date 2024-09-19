@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Swiper from "swiper";
-
-import { CirclePlay } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Mousewheel, Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import { CirclePlay } from "lucide-react";
+import { Link } from "react-router-dom";
+
 import BannerSkeleton from "../BannerSkeleton/BannerSkeleton";
 
 export default function Banner({ bannerData, genres }: any) {

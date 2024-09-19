@@ -9,6 +9,7 @@ import { featuresActions } from "../../Store/features.slice";
 import moon from "../../assets/moon.webp";
 import sun from "../../assets/sun.webp";
 import { Menu, Search, X } from "lucide-react";
+import { auth } from "../../firebase/firebase";
 export default function Header() {
   let [openSearch, setOpenSearch] = useState<Boolean | false>(false);
   let [avatarMenu, setAvatarMenu] = useState<boolean>(false);
@@ -42,7 +43,6 @@ export default function Header() {
     return store.userReducer;
   });
   let { changeTheme } = featuresActions;
-  let { logOut } = userActions;
   function changeSearchValue(): void {
     setOpenSearch((prevValue) => !prevValue);
     dispatch(clearSearchValue());
@@ -199,7 +199,7 @@ export default function Header() {
                 onClick={() => {
                   setAvatarMenu((prev) => !prev);
                 }}
-                className="flex text-sm w-full h-full bg-gray-800 rounded-full md:me-0 focus:ring-2 focus:ring-gray-400 hover:ring-gray-400 hover:ring-2"
+                className="flex text-sm w-full h-full  rounded-full md:me-0 focus:ring-2 focus:ring-gray-400 hover:ring-gray-400 hover:ring-2"
                 type="button"
               >
                 <img
@@ -244,7 +244,7 @@ export default function Header() {
                 </ul>
                 <div
                   onClick={() => {
-                    dispatch(logOut());
+                    auth.signOut();
                   }}
                   className=""
                 >

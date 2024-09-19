@@ -6,13 +6,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDl6aGfNVN6Hg5Vy4IFA90e9EEaoJ5xEAk",
-  authDomain: "filmify-76a1e.firebaseapp.com",
-  projectId: "filmify-76a1e",
-  storageBucket: "filmify-76a1e.appspot.com",
-  messagingSenderId: "643815502686",
-  appId: "1:643815502686:web:d266d9a857564f84d355cf",
-  measurementId: "G-R6C08YJFXS",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

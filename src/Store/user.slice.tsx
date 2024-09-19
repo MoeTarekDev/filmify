@@ -10,10 +10,10 @@ type initialStateType = {
 const initialState: initialStateType = {
   userEmail: "",
   userPassword: "",
-  userName: localStorage.getItem("userName") || "",
-  userToken: localStorage.getItem("uid") || "",
+  userName: "",
+  userToken: "",
 
-  userImage: JSON.parse(localStorage.getItem("userImage") ?? '""'),
+  userImage: "",
 };
 let userReducer = createSlice({
   name: "user",

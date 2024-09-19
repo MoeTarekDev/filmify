@@ -24,7 +24,7 @@ export default function Film(props: any) {
             className={`w-full rounded-lg relative group grow `}
           >
             <Link
-              className="relative z-[10] h-full"
+              className="relative z-[10] min-h-[306.5px] max-h-[487px]"
               onClick={() => {
                 dispatch(clearSearchValue());
                 scrollUp();
@@ -39,7 +39,7 @@ export default function Film(props: any) {
                     : moviePlaceHolder
                 }
                 alt={`${movie.original_title}` + " poster"}
-                className="rounded-lg w-full h-full relative inset-0 z-0 object-cover"
+                className="rounded-lg relative inset-0 z-0 object-cover"
                 width={392}
                 height={588}
               />
